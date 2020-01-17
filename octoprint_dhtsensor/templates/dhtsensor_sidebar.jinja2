@@ -1,0 +1,15 @@
+Humidity:
+<!-- ko if: humidity().length  -->
+<strong data-bind="css: { valueTooHigh: humidityTooHigh() }, style: { display: 'initial' }" style="display: none;"><span data-bind="html: humidity"></span>%</strong>
+<!-- /ko -->
+<!-- ko ifnot: humidity().length  -->
+<strong>-</strong>
+<!-- /ko -->
+<br>
+Temperature:
+<!-- ko if: temperature().length  -->
+<strong data-bind="css: { valueTooHigh: temperatureTooHigh() }, style: { display: 'initial' }" style="display: none;"><span data-bind="html: temperature"></span>°C</strong>
+<!-- /ko -->
+<!-- ko ifnot: temperature().length  -->
+<strong>-</strong>
+<!-- /ko -->

@@ -1,0 +1,55 @@
+<form class="form-horizontal">
+  <div class="control-group">
+    <label class="control-label">{{ _('Sensor Type') }}</label>
+    <div class="controls">
+      <select class="input-medium" data-bind="value: settings.plugins.dhtsensor.sensorType">
+        <option value="dht11">DHT11</option>
+        <option value="dht22">DHT22</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <label class="control-label">{{ _('Data Pin') }}</label>
+    <div class="controls">
+      <input type="number" min="0" max="40" step="1" class="input-mini text-right" data-bind="value: settings.plugins.dhtsensor.dataPin">
+    </div>
+  </div>
+
+  <div class="control-group">
+    <label class="control-label">{{ _('Refresh Interval') }}</label>
+    <div class="controls">
+      <div class="input-append">
+        <input type="number" min="10" max="86400" step="1" class="input-mini text-right" data-bind="value: settings.plugins.dhtsensor.refreshInterval">
+        <span class="add-on">s</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <label class="control-label">{{ _('Decimals') }}</label>
+    <div class="controls">
+      <input type="number" min="0" max="3" step="1" class="input-mini text-right" data-bind="value: settings.plugins.dhtsensor.decimals">
+    </div>
+  </div>
+
+  <div class="control-group">
+    <label class="control-label">{{ _('Max Humidity') }}</label>
+    <div class="controls">
+      <div class="input-append">
+        <input type="number" min="0" max="100" step="1" class="input-mini text-right" data-bind="value: settings.plugins.dhtsensor.maxHumidity">
+        <span class="add-on">%</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <label class="control-label">{{ _('Max Temperature') }}</label>
+    <div class="controls">
+      <div class="input-append">
+        <input type="number" min="0" max="100" step="1" class="input-mini text-right" data-bind="value: settings.plugins.dhtsensor.maxTemperature">
+        <span class="add-on">°C</span>
+      </div>
+    </div>
+  </div>
+</form>
