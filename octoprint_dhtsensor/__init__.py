@@ -8,6 +8,7 @@ from octoprint.util import RepeatedTimer
 
 import Adafruit_DHT
 
+DEFAULT_ENABLE = False
 DEFAULT_SENSOR_TYPE = "dht22"
 DEFAULT_DATA_PIN = 4
 DEFAULT_REFRESH_INTERVAL = 60
@@ -22,6 +23,7 @@ class DHTSensorPlugin(octoprint.plugin.TemplatePlugin,
 			octoprint.plugin.ReloadNeedingPlugin):
 
 	def __init__(self):
+		self.enable = False
 		self.sensorType = ""
 		self.dataPin = 0
 		self.refreshInterval = 0
@@ -44,6 +46,7 @@ class DHTSensorPlugin(octoprint.plugin.TemplatePlugin,
 		self._updateTimer.start()
 
 	def _load_settings(self):
+		self.enable = self._settings.get_boolean(["enable"])
 		self.sensorType = self._settings.get(["sensorType"])
 		self.dataPin = self._settings.get_int(["dataPin"])
 		self.refreshInterval = self._settings.get_int(["refreshInterval"])
@@ -83,6 +86,7 @@ class DHTSensorPlugin(octoprint.plugin.TemplatePlugin,
 
 			self.maxTemperature = DEFAULT_MAX_TEMPERATURE
 
+		self._logger.debug("enable: %s", self.enable)
 		self._logger.debug("sensorType: %s", self.sensorType)
 		self._logger.debug("dataPin: %s", self.dataPin)
 		self._logger.debug("refreshInterval: %s", self.refreshInterval)
@@ -91,6 +95,9 @@ class DHTSensorPlugin(octoprint.plugin.TemplatePlugin,
 		self._logger.debug("maxTemperature: %s", self.maxTemperature)
 
 	def _update_temperature(self):
+		if not self.enable:
+			return
+
 		try:
 			if self.sensorType == "dht11":
 				humidity, temperature = Adafruit_DHT.read_retry(Adafruit_DHT.DHT11,
@@ -163,6 +170,7 @@ class DHTSensorPlugin(octoprint.plugin.TemplatePlugin,
 
 	def get_settings_defaults(self):
 		return dict(
+			enable = DEFAULT_ENABLE,
 			sensorType = DEFAULT_SENSOR_TYPE,
 			dataPin = DEFAULT_DATA_PIN,
 			refreshInterval = DEFAULT_REFRESH_INTERVAL,
@@ -179,6 +187,7 @@ class DHTSensorPlugin(octoprint.plugin.TemplatePlugin,
 		self._plugin_manager.send_plugin_message(self._identifier, dict(
 			humidity = -1,
 			temperature = -1,
+			enable = self.enable,
 			decimals = 0,
 			maxHumidity = self.maxHumidity,
 			maxTemperature = self.maxTemperature
@@ -203,6 +212,7 @@ class DHTSensorPlugin(octoprint.plugin.TemplatePlugin,
 	def on_api_command(self, command, data):
 		if command == "refresh":
 			self._plugin_manager.send_plugin_message(self._identifier, dict(
+				enable = self.enable,
 				maxHumidity = self.maxHumidity,
 				maxTemperature = self.maxTemperature
 			))

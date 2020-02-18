@@ -2,6 +2,8 @@ $(function() {
   function DHTSensorViewModel() {
     var self = this;
 
+    self.enable = ko.observable(true);
+
     self.refreshVisible = ko.observable(true);
 
     self.rawHumidity = ko.observable(-1);
@@ -105,6 +107,10 @@ $(function() {
 
       if (data.hasOwnProperty('temperature')) {
         self.rawTemperature(data.temperature);
+      }
+
+      if (data.hasOwnProperty('enable')) {
+        self.enable(data.enable);
       }
 
       if (data.hasOwnProperty('decimals')) {

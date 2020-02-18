@@ -1,3 +1,4 @@
+<!-- ko if: enable()  -->
 Humidity:
 <!-- ko if: humidity().length  -->
 <strong data-bind="css: { valueTooHigh: humidityTooHigh() }, style: { display: 'initial' }" style="display: none;"><span data-bind="html: humidity"></span>%</strong>
@@ -12,4 +13,8 @@ Temperature:
 <!-- /ko -->
 <!-- ko ifnot: temperature().length  -->
 <strong>-</strong>
+<!-- /ko -->
+<!-- /ko -->
+<!-- ko ifnot: enable()  -->
+Sensor disabled
 <!-- /ko -->

@@ -1,4 +1,13 @@
+<h3>{{ _('DHT Sensor Settings') }}</h3>
+
 <form class="form-horizontal">
+  <div class="control-group">
+    <label class="control-label">{{ _('Enable') }}</label>
+    <div class="controls">
+      <input type="checkbox" data-bind="checked: settings.plugins.dhtsensor.enable">
+    </div>
+  </div>
+
   <div class="control-group">
     <label class="control-label">{{ _('Sensor Type') }}</label>
     <div class="controls">
