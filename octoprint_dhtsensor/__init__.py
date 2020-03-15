@@ -17,10 +17,10 @@ DEFAULT_MAX_HUMIDITY = 15
 DEFAULT_MAX_TEMPERATURE = 50
 
 class DHTSensorPlugin(octoprint.plugin.TemplatePlugin,
-			octoprint.plugin.AssetPlugin,
-			octoprint.plugin.SettingsPlugin,
-			octoprint.plugin.SimpleApiPlugin,
-			octoprint.plugin.ReloadNeedingPlugin):
+                      octoprint.plugin.AssetPlugin,
+                      octoprint.plugin.SettingsPlugin,
+                      octoprint.plugin.SimpleApiPlugin,
+                      octoprint.plugin.ReloadNeedingPlugin):
 
 	def __init__(self):
 		self.enable = False
@@ -40,8 +40,8 @@ class DHTSensorPlugin(octoprint.plugin.TemplatePlugin,
 		self._load_settings()
 
 		self._updateTimer = RepeatedTimer(self.refreshInterval,
-										  self._update_temperature,
-										  run_first = True)
+		                                  self._update_temperature,
+		                                  run_first = True)
 
 		self._updateTimer.start()
 
@@ -65,8 +65,7 @@ class DHTSensorPlugin(octoprint.plugin.TemplatePlugin,
 			self.dataPin = DEFAULT_DATA_PIN
 
 		if self.refreshInterval < 10 or self.refreshInterval > 86400:
-			self._logger.warning("Invalid refreshInterval: %s",
-								 self.refreshInterval)
+			self._logger.warning("Invalid refreshInterval: %s", self.refreshInterval)
 
 			self.refreshInterval = DEFAULT_REFRESH_INTERVAL
 
@@ -81,8 +80,7 @@ class DHTSensorPlugin(octoprint.plugin.TemplatePlugin,
 			self.maxHumidity = DEFAULT_MAX_HUMIDITY
 
 		if self.maxTemperature < 0 or self.maxTemperature > 100:
-			self._logger.warning("Invalid maxTemperature: %s",
-								 self.maxTemperature)
+			self._logger.warning("Invalid maxTemperature: %s", self.maxTemperature)
 
 			self.maxTemperature = DEFAULT_MAX_TEMPERATURE
 
@@ -101,12 +99,12 @@ class DHTSensorPlugin(octoprint.plugin.TemplatePlugin,
 		try:
 			if self.sensorType == "dht11":
 				humidity, temperature = Adafruit_DHT.read_retry(Adafruit_DHT.DHT11,
-																self.dataPin,
-																5)
+				                                                self.dataPin,
+				                                                5)
 			elif self.sensorType == "dht22":
 				humidity, temperature = Adafruit_DHT.read_retry(Adafruit_DHT.DHT22,
-																self.dataPin,
-																5)
+				                                                self.dataPin,
+				                                                5)
 			else:
 				return
 		except Exception as err:
@@ -120,9 +118,7 @@ class DHTSensorPlugin(octoprint.plugin.TemplatePlugin,
 		if (humidity is None or temperature is None or
 			humidity < 0 or temperature < 0 or
 			humidity > 100 or temperature > 100):
-			self._logger.warning("Invalid sensor data: %s | %s",
-								 humidity,
-								 temperature)
+			self._logger.warning("Invalid sensor data: %s | %s", humidity, temperature)
 
 			humidity = -1
 			temperature = -1
@@ -197,8 +193,8 @@ class DHTSensorPlugin(octoprint.plugin.TemplatePlugin,
 			self._updateTimer.cancel()
 
 		self._updateTimer = RepeatedTimer(self.refreshInterval,
-										  self._update_temperature,
-										  run_first = True)
+		                                  self._update_temperature,
+		                                  run_first = True)
 
 		self._updateTimer.start()
 
