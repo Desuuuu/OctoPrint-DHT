@@ -220,6 +220,29 @@ class DHTSensorPlugin(octoprint.plugin.TemplatePlugin,
 	def on_api_get(self, request):
 		return make_response("Not Found", 404)
 
+	def get_update_information(self):
+		return dict(
+			dhtsensor = dict(
+				displayName = self._plugin_name,
+				displayVersion = self._plugin_version,
+				type = "github_release",
+				user = "Desuuuu",
+				repo = "OctoPrint-DHTSensor",
+				current = self._plugin_version,
+				pip = "https://github.com/Desuuuu/OctoPrint-DHTSensor/archive/{target_version}.zip"
+			)
+		)
+
 __plugin_name__ = "DHT Sensor"
 __plugin_pythoncompat__ = ">=2.7,<4"
-__plugin_implementation__ = DHTSensorPlugin()
+
+def __plugin_load__():
+	plugin = DHTSensorPlugin()
+
+	global __plugin_implementation__
+	__plugin_implementation__ = plugin
+
+	global __plugin_hooks__
+	__plugin_hooks__ = {
+		"octoprint.plugin.softwareupdate.check_config": plugin.get_update_information
+	}
