@@ -33,7 +33,7 @@ plugin_url = "https://github.com/Desuuuu/OctoPrint-DHTSensor"
 plugin_license = "AGPLv3"
 
 # Any additional requirements besides OctoPrint should be listed here
-plugin_requires = ["Adafruit_DHT"]
+plugin_requires = ["Adafruit_DHT@https://github.com/Desuuuu/Adafruit_Python_DHT/archive/1.5.0.zip#egg=Adafruit_DHT-1.5.0&sha256=de27d0814972d3f063ca87ab5764a0c481a5322a25db9714b099bcffa8385ac4"]
 
 ### --------------------------------------------------------------------------------------------------------------------
 ### More advanced options that you usually shouldn't have to touch follow after this point
